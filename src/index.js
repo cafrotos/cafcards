@@ -1,12 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import "services/initd";
 import 'index.less';
+
+import React, { createContext, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import Screens from 'screens';
 import reportWebVitals from 'reportWebVitals';
+import firebase from "firebase/app"
+
+export const AppContext = createContext();
 
 export const App = () => {
+  const [store, setStore] = useState({
+    logined: false
+  });
+
+  useEffect(() => {
+    return firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setStore((_store) => ({
+          ..._store,
+          logined: true
+        }))
+      }
+      else {
+        setStore((_store) => ({
+          ..._store,
+          logined: false
+        }))
+      }
+    })
+  }, [])
+
   return (
-    <Screens />
+    <AppContext.Provider
+      value={{
+        ...store,
+        setStore
+      }}
+    >
+      <Screens />
+    </AppContext.Provider>
   )
 }
 
