@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'index.less';
+import Screens from 'screens';
+import reportWebVitals from 'reportWebVitals';
+
+export const App = () => {
+  return (
+    <Screens />
+  )
+}
 
 ReactDOM.render(
   <React.StrictMode>
